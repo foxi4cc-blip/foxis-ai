@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Foxis AI</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #101827;
+  color: white;
+}
+header {
+  padding: 20px;
+  background: #1c2940;
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+}
+header span { color: #ff9f43; }
+#chat {
+  padding: 16px;
+  padding-bottom: 90px;
+}
+.msg {
+  background: #24324b;
+  padding: 13px;
+  margin: 10px 0;
+  border-radius: 14px;
+  line-height: 1.4;
+}
+.user { background: #ff9f43; color: #171717; }
+form {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  padding: 12px;
+  background: #101827;
+  gap: 8px;
+}
+input {
+  flex: 1;
+  min-width: 0;
+  padding: 14px;
+  border-radius: 12px;
+  border: 0;
+  font-size: 16px;
+}
+button {
+  border: 0;
+  border-radius: 12px;
+  background: #ff9f43;
+  padding: 12px;
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+<header>🦊 <span>Foxis</span></header>
+<div id="chat">
+  <div class="msg">Привіт! Я Foxis 🦊 Твій персональний помічник. Напиши мені щось!</div>
+</div>
+<form id="form">
+  <input id="input" placeholder="Напиши повідомлення..." autocomplete="off">
+  <button>Надіслати</button>
+</form>
+<script>
+const form = document.getElementById('form');
+const input = document.getElementById('input');
+const chat = document.getElementById('chat');
+
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const text = input.value.trim();
+  if (!text) return;
+
+  const user = document.createElement('div');
+  user.className = 'msg user';
+  user.textContent = text;
+  chat.appendChild(user);
+  input.value = '';
+
+  const bot = document.createElement('div');
+  bot.className = 'msg';
+  bot.textContent = 'Я отримав твоє повідомлення! 🦊 Це поки демоверсія Foxis. Для справжніх відповідей потрібно підключити AI-модель.';
+  chat.appendChild(bot);
+  window.scrollTo(0, document.body.scrollHeight);
+});
+</script>
+</body>
+</html>
