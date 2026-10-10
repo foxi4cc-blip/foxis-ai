@@ -73,7 +73,7 @@ const form = document.getElementById('form');
 const input = document.getElementById('input');
 const chat = document.getElementById('chat');
 
-form.addEventListener('submit', function(e) {
+form.addEventListener('submit', async function(e) {
   e.preventDefault();
   const text = input.value.trim();
   if (!text) return;
@@ -86,9 +86,23 @@ form.addEventListener('submit', function(e) {
 
   const bot = document.createElement('div');
   bot.className = 'msg';
-  bot.textContent = 'Я отримав твоє повідомлення! 🦊 Це поки демоверсія Foxis. Для справжніх відповідей потрібно підключити AI-модель.';
+  bot.textContent = 'Foxis думає... 🦊';
   chat.appendChild(bot);
-  window.scrollTo(0, document.body.scrollHeight);
+
+  try {
+    const response = await fetch('/.netlify/functions/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text })
+    });
+
+    const data = await response.json();
+    bot.textContent = response.ok
+      ? data.reply
+      : 'Помилка: ' + (data.error || 'не вдалося отримати відповідь');
+  } catch (error) {
+    bot.textContent = 'Не вдалося з’єднатися із сервером Foxis.';
+  }
 });
 </script>
 </body>
